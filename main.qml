@@ -89,7 +89,7 @@ ApplicationWindow {
                     Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("."); }
                     Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("%"); }
                     Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("+"); }
-                    Button { width: columnKeyboard.buttonWidth * 2 + 6; height: columnKeyboard.buttonHeight; text: qsTr("="); }
+                    Button { width: columnKeyboard.buttonWidth * 2 + spacing; height: columnKeyboard.buttonHeight; text: qsTr("="); }
                 }
 
             }
