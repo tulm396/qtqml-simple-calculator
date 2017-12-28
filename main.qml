@@ -13,8 +13,10 @@ ApplicationWindow {
     title:          qsTr("Calculator");
 
     // Declare properties
-    property int mainWindowWidth:   332;
-    property int mainWindowHeight:  295;
+    property int mainWindowWidth:           332;
+    property int mainWindowHeight:          295;
+    property color numberButtonColor:       "blueviolet";
+    property color operationButtonColor:    "hotpink";
 
     Rectangle {
         anchors.fill:   parent;
@@ -52,44 +54,44 @@ ApplicationWindow {
                 Row {
                     spacing: 6;
 
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("7"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("8"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("9"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("/"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; enabled: false; text: qsTr(""); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("C"); }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("7"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("8"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("9"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("/"); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; enabled: false; operation: qsTr(""); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("C"); color: operationButtonColor }
                 }
 
                 Row {
                     spacing: 6;
 
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("4"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("5"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("6"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("*"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("("); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr(")"); }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("4"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("5"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("6"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("*"); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("("); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr(")"); color: operationButtonColor }
                 }
 
                 Row {
                     spacing: 6;
 
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("1"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("2"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("3"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("-"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; enabled: false; text: qsTr(""); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("√"); }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("1"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("2"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("3"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("-"); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; enabled: false; operation: qsTr(""); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("√"); color: operationButtonColor }
                 }
 
                 Row {
                     spacing: 6;
 
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("0"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("."); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("%"); }
-                    Button { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; text: qsTr("+"); }
-                    Button { width: columnKeyboard.buttonWidth * 2 + spacing; height: columnKeyboard.buttonHeight; text: qsTr("="); }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("0"); color: numberButtonColor; }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("."); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("%"); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth; height: columnKeyboard.buttonHeight; operation: qsTr("+"); color: operationButtonColor }
+                    MyButton { width: columnKeyboard.buttonWidth * 2 + parent.spacing; height: columnKeyboard.buttonHeight; operation: qsTr("="); color: operationButtonColor }
                 }
 
             }
@@ -100,5 +102,19 @@ ApplicationWindow {
 
     Component.onCompleted: {
         console.log("---Into Component.onCompleted---")
+    }
+
+    function doOperation(operation) {
+        if (operation === '.' && textFieldInput.text.search(/\./) !== -1) {
+            return;
+        }
+
+        if (operation === 'C') {
+            textFieldInput.clear();
+        }
+
+        if ((operation >= '0' && operation <= '9') || operation === '.') {
+            textFieldInput.text += operation;
+        }
     }
 }
